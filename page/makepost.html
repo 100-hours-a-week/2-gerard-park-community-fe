@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="kr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="../css/generaluser.css">
+        <title>Gerard's 커뮤니티</title>
+    </head>
+    <body>
+        <header>
+            <h1>Gerard's 커뮤니티</h1>
+        </header>
+        <section class="wrap">
+            <h1 class="title">게시글 작성</h1>
+            <article>
+                <div class="inputBox">
+                    <label for="posttitle">제목*</label>
+                    <input id="posttitle" type="text" name="posttitle" maxlength="26" placeholder="제목을 입력해주세요. (최대 26글자)" required>
+                </div>
+                <div class="inputBox">
+                    <label for="postcontent">내용*</label>
+                    <!--<input id="postcontent" type="text" name="postcontent" style="height: 200px; word-wrap: break-word; " placeholder="내용을 입력해주세요.">-->
+                    <textarea name="postcontent" cols="100" rows="10" placeholder="내용을 입력해주세요." required></textarea>
+                    <p class="helperText"></p>
+                </div>
+                <div class="inputBox">
+                    <label for="fsbtn">이미지</label>
+                    <div>
+                        <button id="fsbtn" name="fsbtn">파일 선택</button>
+                        파일을 선택해주세요.
+                    </div>
+                </div>
+                <div class="buttons">
+                    <button id="makepostbtn">완료</button>
+                </div>
+            </article>
+        </section>
+
+    </body>
+</html>

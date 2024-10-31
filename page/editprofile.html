@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="kr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="../css/generaluser.css">
+        <title>Gerard's 커뮤니티</title>
+    </head>
+    <body>
+        <header>
+            <h1>Gerard's 커뮤니티</h1>
+        </header>
+        <section class="wrap">
+            <h1 class="title">회원정보수정</h1>
+            <article>
+                <div class="inputBox">
+                    <label for="profile" a>프로필 사진*</label>
+                </div>
+                <div id="profile" class="profileUploadContainer">
+                    <img id="profilePreview" src="">
+                    <input type="image" required>
+                    <button  class="profileUploadButton" name="userpfuploadbtn">변경</button>
+                </div>
+                <div class="inputBox">
+                    <label for="userid">이메일*</label>
+                    <input id="userid" type="text" name="userid" placeholder="이메일을 입력하세요" required>
+                </div>
+                <div class="inputBox">
+                    <label for="username">닉네임*</label>
+                    <input id="username" type="text" name="username" value="" required> <!--TODO - placeholder에 현재 닉네임 불러오기 구현-->
+                    <p class="helperText"></p>
+                </div>
+                <div class="buttons">
+                    <button id="editprofilebtn">수정하기</button>
+                    <a href="">회원 탈퇴</a> <!--TODO - 모달 구현해야함-->
+                </div>
+                <div class="toastMessage" id="toastContainer">수정완료</div>
+            </article>
+        </section>
+
+    </body>
+</html>

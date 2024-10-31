@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="kr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="../css/generaluser.css">
+        <title>Gerard's 커뮤니티</title>
+    </head>
+    <body>
+        <header>
+            <h1>Gerard's 커뮤니티</h1>
+        </header>
+        <section class="wrap">
+            <h1 class="title">회원가입</h1>
+            <article>
+                <div class="inputBox">
+                    <label for="profile" a>프로필 사진</label>
+                </div>
+                <div id="profile" class="profileUploadContainer">
+                    <img id="profilePreview" src="">
+                    <button  class="profileUploadButton" name="userpfuploadbtn"></button>
+                </div>
+                <div class="inputBox">
+                    <label for="userid">이메일*</label>
+                    <input id="userid" type="text" name="userid" placeholder="이메일을 입력하세요" required>
+                </div>
+                <div class="inputBox">
+                    <label for="userpw">비밀번호*</label>
+                    <input id="userpw" type="password" name="userpw" placeholder="비밀번호를 입력하세요" required>
+                    <p class="helperText"></p>
+                </div>
+                <div class="inputBox">
+                    <label for="userpwcf">비밀번호 확인*</label>
+                    <input id="userpwcf" type="password" name="userpwcf" placeholder="비밀번호를 한번 더 입력하세요" required>
+                    <p class="helperText"></p>
+                </div>
+                <div class="inputBox">
+                    <label for="username">닉네임*</label>
+                    <input id="username" type="text" name="username" placeholder="닉네임을 입력하세요" required>
+                </div>
+                <div class="buttons">
+                    <button id="signupbtn">회원가입</button>
+                    <a href="login.html">로그인하러 가기</a>
+                </div>
+            </article>
+        </section>
+
+    </body>
+</html>
