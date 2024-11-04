@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="kr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="../css/board.css">
+        <title>Gerard's 커뮤니티</title>
+    </head>
+    <body>
+        <header>
+            <div class="row_c" style="margin: 20px;">
+                <div style="flex:1;">
+                    
+                </div>
+                <div style="flex:3;">
+                <h1>Gerard's 커뮤니티</h1>
+                </div>
+                <div class="dropdown" style="flex:1;">
+                    <button onclick="dropdownFunction()" class="dropbtn">
+                        <img class="imgProfile" src="../lib/defaultProfilePic.jpg" alt="icon">
+                    </button>
+                    <div id="dropdown" class="dropdown-content">
+                        <a href="#">회원정보수정</a>
+                        <a href="#">비밀번호수정</a>
+                        <a href="#">로그아웃</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="holi" aria-hidden="true"></div>
+        <section style="margin: 30px 0px;">
+            <div class="row_c">
+                <p style="font-size:1.5em;">안녕하세요,<br>Gerard's 커뮤니티 <strong>게시판</strong>입니다.</p>
+            </div>
+        </section>
+        <section style="margin: 30px 0px;">
+            <div class="row_c" style="justify-content: flex-end;">
+                <div class="buttons">
+                    <button style="width: 25%;">게시글 작성</button>
+                </div>
+            </div>
+        </section>
+        <section>
+            <!--게시글 리스트 영역-->
+            <article class="bgwhite"><!--여기에 게시글 하나 들어감-->
+                <div class="rel">
+                    <div>
+                        <h3>제목1</h3>
+                    </div>
+                    <div class="row">
+                        <div class="row_c" style="width: 30%;">
+                            <div class="row_c">
+                                <p>좋아요</p>
+                                <p>0</p>
+                            </div>
+                            <div class="row_c">
+                                <p>댓글</p>
+                                <p>0</p>
+                            </div>
+                            <div class="row_c">
+                                <p>조회수</p>
+                                <p>0</p>
+                            </div>
+                        </div>
+                        <div class="row_c" style="width: 30%;">
+                            date
+                        </div>
+                    </div>
+                </div>
+                <hr style="border:1px solid#dbdbdb; height: 1px !important; display: block !important; width: 100% !important;"/>
+                <div class="row_c" style="justify-content: flex-start;">
+                    <img class="imgProfile" src="../lib/defaultProfilePic.jpg" alt="icon">
+                    <div style="margin-left: 10px;font-weight: 500;font-size: large;">username</div>
+                </div>
+            </article>
+
+            <article class="bgwhite"><!--여기에 게시글 하나 들어감-->
+                <div class="rel">
+                    <div>
+                        <h3>제목1</h3>
+                    </div>
+                    <div class="row">
+                        <div class="row_c" style="width: 30%;">
+                            <div class="row_c">
+                                <p>좋아요</p>
+                                <p>0</p>
+                            </div>
+                            <div class="row_c">
+                                <p>댓글</p>
+                                <p>0</p>
+                            </div>
+                            <div class="row_c">
+                                <p>조회수</p>
+                                <p>0</p>
+                            </div>
+                        </div>
+                        <div class="row_c" style="width: 30%;">
+                            date
+                        </div>
+                    </div>
+                </div>
+                <hr style="border:1px solid#dbdbdb; height: 1px !important; display: block !important; width: 100% !important;"/>
+                <div class="row_c" style="justify-content: flex-start;">
+                    <img class="imgProfile" src="../lib/defaultProfilePic.jpg" alt="icon">
+                    <div style="margin-left: 10px;font-weight: 500;font-size: large;">username</div>
+                </div>
+            </article>
+
+        </section>          
+    </body>
+</html>

@@ -9,6 +9,64 @@
     margin-bottom: 67px;
 }
 
+.previous {
+    font-size: 40px;
+    color: #000000;
+}
+
+.row_c {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+}
+
+.imgProfile {
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    overflow: hidden;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #D9D9D9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.show {display:block;}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+  
+.dropdown-content a:hover {background-color: #E9E9E9;}
+
+textarea {
+    resize: none;
+}
+
 article {
     width: 100%;
     max-width: 400px;
@@ -157,10 +215,10 @@ a {
 .profileUploadContainer {
     position: relative;
     display: inline-block; /* 또는 부모 요소에 따라 다른 디스플레이 속성을 설정할 수 있음 */
-    width: 100px; /* 프로필 이미지의 너비에 맞춤 */
-    height: 100px; /* 프로필 이미지의 높이에 맞춤 */
+    width: 100px;
+    height: 100px;
     overflow: hidden; /* 컨테이너 바깥으로 나가는 내용 숨김 */
-    border-radius: 50%; /* 컨테이너의 모서리를 둥글게 */
+    border-radius: 50%;
 }
 
 .profileUploadButton {
@@ -168,14 +226,14 @@ a {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: rgba(0, 0, 0, 0.5); /* 버튼이 보이도록 반투명 배경 */
+    background-color: rgba(0, 0, 0, 0.415); /* 버튼이 보이도록 반투명 배경 */
     color: white; /* 텍스트 색상 */
-    padding: 5px 10px; /* 텍스트 주변에 적절한 여백을 제공 */
     border: 2px solid white; /* 테두리 색상 설정 */
     cursor: pointer; /* 커서 스타일 */
     text-align: center; /* 텍스트 중앙 정렬 */
     white-space: nowrap; /* 텍스트가 한 줄로 나오도록 설정 */
-    border-radius: 20px; /* 버튼의 모서리를 둥글게 */
+    border-radius: 50%; /* 버튼의 모서리를 둥글게 */
+    padding: 50px;
 }
 #profilePreview {
     filter: brightness(50%); /* 이미지를 어둡게 만듬 */
