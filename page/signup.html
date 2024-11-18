@@ -25,9 +25,10 @@
         <div class="holi" aria-hidden="true"></div>
         <section class="wrap">
             <h1 class="title">회원가입</h1>
-            <article>
+            <form id="signupform">
                 <div class="inputBox">
                     <label for="profile" a>프로필 사진</label>
+                    <p class="helperText"></p>
                 </div>
                 <div id="profile" class="profileUploadContainer">
                     <img id="profilePreview" src="">
@@ -35,28 +36,30 @@
                 </div>
                 <div class="inputBox">
                     <label for="userid">이메일*</label>
-                    <input id="userid" type="text" name="userid" placeholder="이메일을 입력하세요" required>
+                    <input id="userid" type="text" name="userid" placeholder="이메일을 입력하세요">
+                    <p class="helperText" id="idhelp"></p>
                 </div>
                 <div class="inputBox">
                     <label for="userpw">비밀번호*</label>
-                    <input id="userpw" type="password" name="userpw" placeholder="비밀번호를 입력하세요" required>
-                    <p class="helperText"></p>
+                    <input id="userpw" type="password" name="userpw" placeholder="비밀번호를 입력하세요">
+                    <p class="helperText" id="pwhelp"></p>
                 </div>
                 <div class="inputBox">
                     <label for="userpwcf">비밀번호 확인*</label>
-                    <input id="userpwcf" type="password" name="userpwcf" placeholder="비밀번호를 한번 더 입력하세요" required>
-                    <p class="helperText"></p>
+                    <input id="userpwcf" type="password" name="userpwcf" placeholder="비밀번호를 한번 더 입력하세요">
+                    <p class="helperText" id="pwcfhelp"></p>
                 </div>
                 <div class="inputBox">
                     <label for="username">닉네임*</label>
-                    <input id="username" type="text" name="username" placeholder="닉네임을 입력하세요" required>
+                    <input id="username" type="text" name="username" placeholder="닉네임을 입력하세요">
+                    <p class="helperText" id="namehelp"></p>
                 </div>
                 <div class="buttons">
-                    <button id="signupbtn">회원가입</button>
+                    <button id="signupbtn" type="submit">회원가입</button>
                     <a href="login.html">로그인하러 가기</a>
                 </div>
-            </article>
+            </form>
         </section>
-
+        <script type="module" src="../js/singup.js"></script>
     </body>
 </html>
