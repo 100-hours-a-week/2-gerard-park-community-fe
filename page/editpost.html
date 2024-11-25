@@ -10,7 +10,7 @@
         <header>
             <div class="row_c" style="margin: 20px;">
                 <div style="flex:1;">
-                    <button style="border: none;background-color: #f5f5f5;">
+                    <button id="backBtn" style="border: none;background-color: #f5f5f5;">
                         <img class="imgProfile" src="../lib/arrow.png">
                     </button>
                 </div>
@@ -22,9 +22,9 @@
                         <img class="imgProfile" src="../lib/defaultProfilePic.jpg" alt="icon">
                     </button>
                     <div id="dropdownMenu" class="dropdown-content">
-                        <a href="1">회원정보수정</a>
-                        <a href="2">비밀번호수정</a>
-                        <a href="3">로그아웃</a>
+                        <a href="./editprofile.html">회원정보수정</a>
+                        <a href="./editpassword.html">비밀번호수정</a>
+                        <a id="logout">로그아웃</a>
                     </div>
                 </div>
             </div>
@@ -32,33 +32,34 @@
         <div class="holi" aria-hidden="true"></div>
         <section class="wrap">
             <h1 class="title">게시글 수정</h1>
-            <form>
+            <form id="editPostForm">
                 <div class="inputBox">
-                    <label for="posttitle">제목*</label>
+                    <label for="postTitle">제목*</label>
                     <hr style="border:1px solid#dbdbdb; height: 1px !important; display: block !important; width: 100% !important;"/>
-                    <input id="posttitle" type="text" name="posttitle" maxlength="26" value="" placeholder="제목을 입력해주세요. (최대 26글자)" required>
+                    <input id="postTitle" type="text" name="posttitle" maxlength="26" value="" placeholder="제목을 입력해주세요. (최대 26글자)">
                     <hr style="border:1px solid#dbdbdb; height: 1px !important; display: block !important; width: 100% !important;"/>
                 </div>
                 <div class="inputBox">
-                    <label for="postcontent">내용*</label>
+                    <label for="postContent">내용*</label>
                     <hr style="border:1px solid#dbdbdb; height: 1px !important; display: block !important; width: 100% !important;"/>
                     <!--<input id="postcontent" type="text" name="postcontent" style="height: 200px; word-wrap: break-word; " placeholder="내용을 입력해주세요.">-->
-                    <textarea name="postcontent" cols="100" rows="10" placeholder="내용을 입력해주세요." required><c:out value="${content}" /></textarea>
+                    <textarea id="postContent" cols="100" rows="10" placeholder="내용을 입력해주세요."><c:out value="${content}" /></textarea>
                     <hr style="border:1px solid#dbdbdb; height: 1px !important; display: block !important; width: 100% !important;"/>
                     <p class="helperText"></p>
                 </div>
                 <div class="inputBox">
-                    <label for="fsbtn">이미지</label>
-                    <div>
-                        <button id="fsbtn" name="fsbtn">파일 선택</button>
-                        파일을 선택해주세요.
+                    <label for="postimg">이미지</label>
+                    <div id="imgP">
+                        <input type="file" id="postImg">
+                        <!--<button id="fsbtn" name="fsbtn">파일 선택</button>
+                        파일을 선택해주세요.-->
                     </div>
                 </div>
                 <div class="buttons">
-                    <button id="editpostbtn" type="submit">수정하기</button>
+                    <button type="submit">수정하기</button>
                 </div>
             </form>
         </section>
-
+        <script type="module" src="../js/editpost.js"></script>
     </body>
 </html>

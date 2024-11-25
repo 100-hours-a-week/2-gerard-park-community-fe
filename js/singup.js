@@ -72,34 +72,33 @@ signupForm.addEventListener('submit', async (e) => {
         return false;
     }
     
-
-    fetch('http://127.0.0.1:5500/page/signup.html')
+    fetch('http://localhost:3000/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          password,
+          username
+        })
+      })
       .then((response) => {
-        // 응답을 JSON으로 변환
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
-        return {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email,
-            password,
-            username
-          })
-        };
+        return response.json();
       })
       .then((data) => {
-        // 데이터 처리
-        console.log(data);
+        console.log('회원가입 성공:', data);
+        // 회원가입 성공 후 처리
+        // window.location.href = '/login';
       })
       .catch((error) => {
-        // 에러 처리
-        console.error(
-          'There was a problem with your fetch operation:',
-          error
-        );
+        console.error('There was a problem with your fetch operation:', error);
       });
+});
+//뒤로가기
+document.querySelector('#backBtn').addEventListener('click', () => {
+    window.history.back();
 });

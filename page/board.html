@@ -20,9 +20,9 @@
                         <img class="imgProfile" src="../lib/defaultProfilePic.jpg" alt="icon">
                     </button>
                     <div id="dropdownMenu" class="dropdown-content">
-                        <a href="1">회원정보수정</a>
-                        <a href="2">비밀번호수정</a>
-                        <a href="3">로그아웃</a>
+                        <a href="./editprofile.html">회원정보수정</a>
+                        <a href="./editpassword.html">비밀번호수정</a>
+                        <a id="logout">로그아웃</a>
                     </div>
                 </div>
             </div>
@@ -36,16 +36,15 @@
         <section style="margin: 30px 0px;">
             <div class="row_c" style="justify-content: flex-end;">
                 <div class="buttons">
-                    <button style="width: 25%;">게시글 작성</button>
+                    <button id="makePost" style="width: 25%;">게시글 작성</button>
                 </div>
             </div>
         </section>
-        <section>
-            <!--게시글 리스트 영역-->
-            <article class="bgwhite"><!--여기에 게시글 하나 들어감-->
+        <section id="boardList"> <!--게시글 리스트 영역-->
+            <article id="post2" class="bgwhite"> <!--여기에 게시글 하나 들어감-->
                 <div class="rel">
                     <div>
-                        <h3>제목1</h3>
+                        <h3>sample2</h3>
                     </div>
                     <div class="row">
                         <div class="row_c" style="width: 30%;">
@@ -74,10 +73,10 @@
                 </div>
             </article>
 
-            <article class="bgwhite"><!--여기에 게시글 하나 들어감-->
+            <article id="post1" class="bgwhite"> <!--여기에 게시글 하나 들어감-->
                 <div class="rel">
                     <div>
-                        <h3>제목1</h3>
+                        <h3>sample1</h3>
                     </div>
                     <div class="row">
                         <div class="row_c" style="width: 30%;">
@@ -106,6 +105,7 @@
                 </div>
             </article>
 
-        </section>          
+        </section>
+        <script type="module" src="../js/board.js"></script>          
     </body>
 </html>

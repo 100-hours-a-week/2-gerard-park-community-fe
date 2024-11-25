@@ -1,60 +1,73 @@
 <!DOCTYPE html>
 <html lang="kr">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="../css/generaluser.css">
-        <title>Gerard's 커뮤니티</title>
-    </head>
-    <body>
-        <header>
-            <div class="row_c" style="margin: 20px;">
-                <div style="flex:1;">
-                    
-                </div>
-                <div style="flex:3;">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../css/generaluser.css">
+    <title>Gerard's 커뮤니티</title>
+</head>
+
+<body>
+    <header>
+        <div class="row_c" style="margin: 20px;">
+            <div style="flex:1;">
+
+            </div>
+            <div style="flex:3;">
                 <h1>Gerard's 커뮤니티</h1>
-                </div>
-                <div class="dropdown" id="dropdown" style="flex:1;">
-                    <button id="dropButton" class="dropbtn">
-                        <img class="imgProfile" src="../lib/defaultProfilePic.jpg" alt="icon">
-                    </button>
-                    <div id="dropdownMenu" class="dropdown-content">
-                        <a href="1">회원정보수정</a>
-                        <a href="2">비밀번호수정</a>
-                        <a href="3">로그아웃</a>
-                    </div>
+            </div>
+            <div class="dropdown" id="dropdown" style="flex:1;">
+                <button id="dropButton" class="dropbtn">
+                    <img class="imgProfile" src="../lib/defaultProfilePic.jpg" alt="icon">
+                </button>
+                <div id="dropdownMenu" class="dropdown-content">
+                    <a href="./editprofile.html">회원정보수정</a>
+                    <a href="./editpassword.html">비밀번호수정</a>
+                    <a id="logout">로그아웃</a>
                 </div>
             </div>
-        </header>
-        <div class="holi" aria-hidden="true"></div>
-        <section class="wrap">
-            <h1 class="title">회원정보수정</h1>
-            <form>
+        </div>
+    </header>
+    <div class="holi" aria-hidden="true"></div>
+    <section class="wrap">
+        <h1 class="title">회원정보수정</h1>
+        <article>
+            <form id="editProfileForm">
                 <div class="inputBox">
                     <label for="profile" a>프로필 사진*</label>
                 </div>
                 <div id="profile" class="profileUploadContainer">
                     <img id="profilePreview" src="">
-                    <input type="image" required>
-                    <button  class="profileUploadButton" name="userpfuploadbtn">변경</button>
+                    <button class="profileUploadButton" name="userpfuploadbtn">변경</button>
                 </div>
                 <div class="inputBox">
-                    <label for="userid">이메일*</label>
-                    <input id="userid" type="text" name="userid" placeholder="이메일을 입력하세요" required>
+                    <label for="useremail">이메일</label>
+                    <p id="useremail" class="emailP"></p> <!--TODO 현재 이메일 불러오기 구현-->
                 </div>
                 <div class="inputBox">
                     <label for="username">닉네임*</label>
-                    <input id="username" type="text" name="username" value="" required> <!--TODO - placeholder에 현재 닉네임 불러오기 구현-->
+                    <input id="username" type="text" name="username" value=""> <!--TODO 현재 닉네임 불러오기 구현-->
                     <p class="helperText"></p>
                 </div>
                 <div class="buttons">
-                    <button id="editprofilebtn" type="submit">수정하기</button>
-                    <a href="">회원 탈퇴</a> <!--TODO - 모달 구현해야함-->
+                    <button type="submit">수정하기</button>
                 </div>
-                <div class="toastMessage" id="toastContainer">수정완료</div>
             </form>
-        </section>
+            <button id="deleteAccountBtn">회원 탈퇴</button>
+            <!-- 회원탈퇴 모달 -->
+            <div id="deleteModal" class="modal">
+                <div class="modal-content">
+                    <h2>회원 탈퇴</h2>
+                    <p>정말로 탈퇴하시겠습니까? 이 작업은 되돌릴 수 없습니다.</p>
+                    <button id="confirmDelete">확인</button>
+                    <button id="cancelDelete">취소</button>
+                </div>
+            </div>
+            <div class="toastMessage" id="toastContainer">수정완료</div>
+        </article>
+    </section>
+    <script type="module" src="../js/editprofile.js"></script>
+</body>
 
-    </body>
 </html>
