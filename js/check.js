@@ -1,4 +1,4 @@
-export function checkLength(value,num) {
+export function checkLength(value, num) {
     return value.length <= num;
 }
 export function isEmail(str) {

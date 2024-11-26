@@ -1,24 +1,24 @@
 {
-  "name": "2-gerard-park-community-fe",
-  "version": "0.0.1",
-  "description": "Community Homepage",
-  "main": "eslint.config.js",
-  "type": "module",
-  "scripts": {
-    "start": "node eslint.config.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint",
-    "lint:fix": "eslint . --fix",
-    "format": "prettier --write ."
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@eslint/eslintrc": "^3.1.0",
-    "eslint-config-airbnb": "^19.0.4",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-airbnb": "^0.0.1-security",
-    "eslint-plugin-prettier": "^5.2.1",
-    "prettier": "^3.3.3"
-  }
+    "name": "2-gerard-park-community-fe",
+    "version": "0.0.1",
+    "description": "Community Homepage",
+    "main": "eslint.config.js",
+    "type": "module",
+    "scripts": {
+        "start": "node eslint.config.js",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "lint": "eslint .",
+        "lint:fix": "eslint . --fix",
+        "format": "prettier --write ."
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@eslint/eslintrc": "^3.1.0",
+        "eslint-config-airbnb": "^19.0.4",
+        "eslint-config-prettier": "^9.1.0",
+        "eslint-plugin-airbnb": "^0.0.1-security",
+        "eslint-plugin-prettier": "^5.2.1",
+        "prettier": "^3.3.3"
+    }
 }

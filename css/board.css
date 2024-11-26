@@ -62,3 +62,7 @@ article {
     padding: 20px 0px;
     margin-left: 75%;
 }
+
+.row_c p {
+    margin: 1px 3px;
+}

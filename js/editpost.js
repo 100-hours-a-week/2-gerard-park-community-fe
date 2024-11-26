@@ -1,14 +1,15 @@
-import './dropdown.js';
+import { fetchUserProfile } from './dropdown.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     const editPostForm = document.getElementById('editPostForm');
     const sessionId = sessionStorage.getItem('sessionId');
 
     if (!sessionId) {
-        alert("로그인이 필요합니다.");
+        alert('로그인이 필요합니다.');
         window.location.href = '/page/login.html';
     }
 
+    fetchUserProfile();
     // 게시글 정보 불러오기
     fetchPostInfo();
 
@@ -26,7 +27,7 @@ async function fetchPostInfo() {
         const sessionId = sessionStorage.getItem('sessionId');
 
         if (!postId) {
-            alert("잘못된 접근입니다.");
+            alert('잘못된 접근입니다.');
             window.location.href = '/page/board.html';
         }
 
@@ -35,14 +36,13 @@ async function fetchPostInfo() {
             headers: {
                 'Authorization': sessionId
             },
-            credentials: 'include'
+            credentials: 'include',
         });
 
         if (response.ok) {
             const data = await response.json();
             document.getElementById('postTitle').value = data.title;
-            document.getElementById('postContent').value = data.content;
-            
+            document.getElementById('postContent').value = data.content;            
             // 이미지가 있는 경우 미리보기 표시
             if (data.image) {
                 const imagePreview = document.createElement('img');
@@ -52,12 +52,12 @@ async function fetchPostInfo() {
             }
         } else {
             console.error('게시글 정보를 불러오는데 실패했습니다.');
-            alert("게시글 정보를 불러오지 못했습니다.");
+            alert('게시글 정보를 불러오지 못했습니다.');
             window.location.href = '/page/board.html';
         }
     } catch (error) {
         console.error('에러:', error);
-        alert("게시글 정보를 불러오는 중 오류가 발생했습니다.");
+        alert('게시글 정보를 불러오는 중 오류가 발생했습니다.');
         window.location.href = '/page/board.html';
     }
 }
@@ -70,7 +70,7 @@ async function updatePostInfo() {
 
         const title = document.getElementById('postTitle').value;
         const content = document.getElementById('postContent').value;
-        const imageFile = document.getElementById('postImg').files[0];
+        const image = document.getElementById('postImg').files[0];
 
         if (!title.trim() || !content.trim()) {
             alert('제목과 내용을 모두 입력해주세요.');
@@ -80,8 +80,8 @@ async function updatePostInfo() {
         const formData = new FormData();
         formData.append('title', title);
         formData.append('content', content);
-        if (imageFile) {
-            formData.append('image', imageFile);
+        if (image) {
+            formData.append('image', image);
         }
 
         const response = await fetch(`http://localhost:3000/board/post/${postId}`, {
@@ -90,11 +90,10 @@ async function updatePostInfo() {
                 'Authorization': sessionId
             },
             body: formData,
-            credentials: 'include'
+            credentials: 'include',
         });
 
-        const data = await response.json();
-        
+        const data = await response.json();        
         if (response.ok) {
             alert('게시글이 성공적으로 수정되었습니다.');
             window.location.href = `/page/viewpost.html?id=${postId}`;

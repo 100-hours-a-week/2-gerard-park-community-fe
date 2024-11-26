@@ -19,7 +19,7 @@
                 </div>
                 <div class="dropdown" id="dropdown" style="flex:1;">
                     <button id="dropButton" class="dropbtn">
-                        <img class="imgProfile" src="../lib/defaultProfilePic.jpg" alt="icon">
+                        <img id="dropProfileImage" class="imgProfile" src="../lib/defaultProfilePic.jpg" alt="icon">
                     </button>
                     <div id="dropdownMenu" class="dropdown-content">
                         <a href="./editprofile.html">회원정보수정</a>
@@ -36,16 +36,15 @@
                 <div class="inputBox">
                     <label for="postTitle">제목*</label>
                     <hr style="border:1px solid#dbdbdb; height: 1px !important; display: block !important; width: 100% !important;"/>
-                    <input id="postTitle" type="text" name="posttitle" maxlength="26" value="" placeholder="제목을 입력해주세요. (최대 26글자)">
+                    <input id="postTitle" type="text" name="posttitle" maxlength="26" value="" placeholder="제목을 입력해주세요. (최대 26글자)" style="margin-bottom: 0px;">
                     <hr style="border:1px solid#dbdbdb; height: 1px !important; display: block !important; width: 100% !important;"/>
                 </div>
                 <div class="inputBox">
                     <label for="postContent">내용*</label>
                     <hr style="border:1px solid#dbdbdb; height: 1px !important; display: block !important; width: 100% !important;"/>
-                    <!--<input id="postcontent" type="text" name="postcontent" style="height: 200px; word-wrap: break-word; " placeholder="내용을 입력해주세요.">-->
-                    <textarea id="postContent" cols="100" rows="10" placeholder="내용을 입력해주세요."><c:out value="${content}" /></textarea>
-                    <hr style="border:1px solid#dbdbdb; height: 1px !important; display: block !important; width: 100% !important;"/>
-                    <p class="helperText"></p>
+                    <textarea id="postContent" cols="100" rows="10" placeholder="내용을 입력해주세요."></textarea>
+                    <hr style="border:1px solid#dbdbdb; height: 1px !important; display: block !important; width: 100% !important; margin-bottom: 20px;"/>
+                    <p class="helperText" style="bottom: 15px;"></p>
                 </div>
                 <div class="inputBox">
                     <label for="postimg">이미지</label>

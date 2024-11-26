@@ -1,14 +1,15 @@
-import './dropdown.js';
+import { fetchUserProfile } from './dropdown.js';
 
 async function loadPosts() {
     try {
         // 세션 확인
         const sessionId = sessionStorage.getItem('sessionId');
-        /*
-        if (!sessionData) {
+        
+        if (!sessionId) {
+            alert('잘못된 접근입니다!');
             window.location.href = '/page/login.html';
             return;
-        } */
+        }
 
         const response = await fetch('http://localhost:3000/board/posts', {
             method: 'GET',
@@ -17,82 +18,67 @@ async function loadPosts() {
             },
             credentials: 'include'
         });
-        
+
         if (!response.ok) {
             throw new Error('Failed to fetch posts');
         }
-        
+
         const posts = await response.json();
         const boardList = document.getElementById('boardList');
         boardList.innerHTML = ''; // Clear existing content
-        
+
         posts.forEach(post => {
             const postElement = `
-                <div class="post">
+                <article class="bgwhite" data-post-id="${post.id}">                    
+                    <div class="rel">
+                        <div>
+                            <h3>${post.title}</a></h3>
+                        </div>
+                        <div class="row">
+                            <div class="row_c" style="width: 40%;">
+                                <div class="row_c">
+                                    <p>좋아요</p>
+                                    <p>${post.likes || 0}</p>
+                                </div>
+                                <div class="row_c">
+                                    <p>댓글</p>
+                                    <p>${post.comments || 0}</p>
+                                </div>
+                                <div class="row_c">
+                                    <p>조회수</p>
+                                    <p>${post.views || 0}</p>
+                                </div>
+                            </div>
+                            <div class="row_c" style="width: 30%;">
+                                ${new Date(post.createdAt).toLocaleDateString()}
+                            </div>
+                        </div>
+                    </div>
+                    <hr style="border:1px solid#dbdbdb; height: 1px !important; display: block !important; width: 100% !important;"/>
                     <div class="row_c" style="justify-content: flex-start;">
                         <img src="${post.profileImage || '../lib/defaultProfilePic.jpg'}" class="imgProfile" alt="profile">
                         <div style="margin-left: 10px;font-weight: 500;font-size: large;">
                             ${post.username}
                         </div>
                     </div>
-                    
-                    <div class="rel">
-                        <div>
-                            <h3><a href="/page/viewpost.html?id=${post.id}">${post.title}</a></h3>
-                        </div>
-                        
-                        <div class="row">
-                            <div class="row_c" style="width: 30%;">
-                                <div class="row_c">
-                                    <button class="like-btn" data-post-id="${post.id}">
-                                        ${post.isLiked ? '❤️' : '🤍'} ${post.likes || 0}
-                                    </button>
-                                </div>
-                                <div class="row_c">댓글 ${post.comments || 0}</div>
-                                <div class="row_c">조회수 ${post.views || 0}</div>
-                            </div>
-                            
-                            <div class="row_c" style="width: 30%;">
-                                ${new Date(post.createdAt).toLocaleDateString()}
-                            </div>
-                        </div>
-                    </div>
-                    <hr>
-                </div>
+                </article>
             `;
-            boardList.innerHTML += postElement;
+            //boardList.innerHTML += postElement;
+            boardList.innerHTML = postElement + boardList.innerHTML;
         });
 
-        // 좋아요 버튼 이벤트 리스너 추가
-        document.querySelectorAll('.like-btn').forEach(btn => {
-            btn.addEventListener('click', handleLike);
+        // 각 게시글에 이벤트 리스너 추가
+        document.querySelectorAll('.bgwhite').forEach(post => {
+            post.addEventListener('click', viewSelectedPost);
         });
     } catch (error) {
         console.error('Error loading posts:', error);
     }
 }
-
-// 좋아요 처리 함수
-async function handleLike(e) {
-    try {
-        const postId = e.target.dataset.postId;
-        const sessionId = sessionStorage.getItem('sessionId');
-        
-        const response = await fetch(`http://localhost:3000/board/post/${postId}/like`, {
-            method: 'POST',
-            headers: {
-                'Authorization': sessionId
-            },
-            credentials: 'include'
-        });
-
-        if (response.ok) {
-            // 좋아요 상태 업데이트를 위해 게시글 목록 새로고침
-            loadPosts();
-        }
-    } catch (error) {
-        console.error('Error handling like:', error);
-    }
+// 클릭한 게시글로 이동 함수
+async function viewSelectedPost(e) {
+    const selectedPostId = e.currentTarget.dataset.postId;
+    window.location.href = `/page/viewpost.html?id=${selectedPostId}`;
 }
 
 // 게시글 작성 버튼 이벤트 리스너
@@ -107,4 +93,7 @@ document.querySelector('#makePost').addEventListener('click', () => {
 });
 
 // 페이지 로드 시 게시글 목록 불러오기
-document.addEventListener('DOMContentLoaded', loadPosts);
+document.addEventListener('DOMContentLoaded', () => {
+    fetchUserProfile();
+    loadPosts();
+});

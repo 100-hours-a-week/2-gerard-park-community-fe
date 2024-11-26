@@ -1,130 +1,81 @@
-import './dropdown.js';
+import * as checkValidate from './check.js'
+import { fetchUserProfile } from './dropdown.js';
+
 document.addEventListener('DOMContentLoaded', () => {
-    const editProfileForm = document.getElementById('editProfileForm');
-    const deleteAccountBtn = document.getElementById('deleteAccountBtn');
-    const deleteModal = document.getElementById('deleteModal');
-    const confirmDelete = document.getElementById('confirmDelete');
-    const cancelDelete = document.getElementById('cancelDelete');
+    const editPasswordForm = document.getElementById('editPasswordForm');
 
-    // 사용자 정보 불러오기
-    fetchUserInfo();
+    fetchUserProfile();
 
-    // 프로필 수정 폼 제출
-    editProfileForm.addEventListener('submit', (e) => {
+    // 비밀번호 수정 폼 제출
+    editPasswordForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        updateUserInfo();
-    });
+        const password = document.getElementById('userpw').value;
+        const pwcf = document.getElementById('userpwcf').value;
+        const sessionId = sessionStorage.getItem('sessionId');
+        const editPwBtn = document.getElementById('editPasswordBtn');
+        let countValidateError = 0;
 
-    // 회원탈퇴 버튼 클릭
-    deleteAccountBtn.addEventListener('click', () => {
-        deleteModal.style.display = 'block';
-    });
+        if (password == '') {
+            document.getElementById('pwhelp').innerHTML = '*비밀번호를 입력해주세요.';
+            if (pwcf == '') {
+                document.getElementById('pwcfhelp').innerHTML = '*비밀번호를 한번더 입력해주세요.';
+            } else if (!checkValidate.isMatch(password, pwcf)) {
+                document.getElementById('pwcfhelp').innerHTML = '*비밀번호가 다릅니다.';
+            } else {
+                document.getElementById('pwcfhelp').innerHTML = '';
+            }
+            countValidateError++;
+        } else if (!checkValidate.isPassword(password)) {
+            document.getElementById('pwhelp').innerHTML = '*비밀번호는 8자 이상, 20자 이하이며, 대문자,소문자, 숫자, 특수문자를 각각 최소 1개 포함해야 합니다.';
+            if (pwcf == '') {
+                document.getElementById('pwcfhelp').innerHTML = '*비밀번호를 한번더 입력해주세요.';
+            } else if (!checkValidate.isMatch(password, pwcf)) {
+                document.getElementById('pwcfhelp').innerHTML = '*비밀번호가 다릅니다.';
+            } else {
+                document.getElementById('pwcfhelp').innerHTML = '';
+            }
+            countValidateError++;
+        } else {
+            document.getElementById('pwhelp').innerHTML = '';
+            if (pwcf == '') {
+                document.getElementById('pwcfhelp').innerHTML = '*비밀번호를 한번더 입력해주세요.';
+                countValidateError++;
+            } else if (!checkValidate.isMatch(password, pwcf)) {
+                document.getElementById('pwhelp').innerHTML = '*비밀번호가 확인과 다릅니다.';
+                document.getElementById('pwcfhelp').innerHTML = '*비밀번호와 다릅니다.';
+                countValidateError++;
+            } else {
+                document.getElementById('pwcfhelp').innerHTML = '';
+                editPwBtn.style.backgroundColor = '7f6aee';
+            }
+        }
 
-    // 회원탈퇴 확인
-    confirmDelete.addEventListener('click', () => {
-        deleteUser();
-    });
+        if (countValidateError != 0) {
+            return false;
+        }
 
-    // 회원탈퇴 취소
-    cancelDelete.addEventListener('click', () => {
-        deleteModal.style.display = 'none';
+        try {
+            const response = await fetch('http://localhost:3000/users/update-password', {
+                method: 'PATCH',
+                headers: {
+                    'Authorization': sessionId,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ password }),
+                credentials: 'include'
+            });
+            const data = await response.json();
+            if (response.ok) {
+                alert('비밀번호가 성공적으로 변경되었습니다.');
+                document.getElementById('userpw').value = '';
+                document.getElementById('userpwcf').value = '';
+                editPwBtn.style.backgroundColor = 'aca0eb';
+            } else {
+                alert('비밀번호 변경에 실패했습니다: ' + data.message);
+            }
+        } catch (error) {
+            console.error('에러:', error);
+            alert('비밀번호 변경 중 오류가 발생했습니다.');
+        }
     });
 });
-
-/* async function fetchUserInfo() {
-    try {
-        const response = await fetch('http://localhost:3000/users/user-info', {
-            method: 'GET',
-            credentials: 'include'
-        });
-        if (response.ok) {
-            const data = await response.json();
-            document.getElementById('useremail').innerHTML = `${data.email}`;
-            document.getElementById('username').value = data.username;
-        } else {
-            console.error('사용자 정보를 불러오는데 실패했습니다!');
-        }
-    } catch (error) {
-        console.error('에러:', error);
-    }
-} */
-
-async function fetchUserInfo() {
-    const sessionId = sessionStorage.getItem('sessionId');
-
-    if (!sessionId) {
-        alert("세션이 만료되었습니다. 다시 로그인해 주세요.");
-        window.location.href = '/page/login.html';
-    }
-
-    try {
-        const response = await fetch('http://localhost:3000/users/user-info', {
-            method: 'GET',
-            headers: { 'Authorization': sessionId },
-            credentials: 'include'
-        });
-
-        if (response.ok) {
-            const data = await response.json();
-            document.getElementById('useremail').innerHTML = data.email;
-            document.getElementById('username').value = data.username;
-        } else {
-            console.error('사용자 정보를 불러오는데 실패했습니다.');
-            //alert("사용자 정보를 불러오지 못했습니다.");
-            //window.location.href = '/page/login.html';
-        }
-
-    } catch (error) {
-        console.error('에러:', error);
-        //alert("사용자 정보를 불러오는 중 오류가 발생했습니다.");
-        //window.location.href = '/page/login.html';
-    }
-}
-
-async function updateUserInfo() {
-    const email = document.getElementById('useremail').innerHTML;
-    const username = document.getElementById('username').value;
-    const sessionId = sessionStorage.getItem('sessionId');
-    try {
-        const response = await fetch('http://localhost:3000/users/update', {
-            method: 'PATCH',
-            headers: {
-                'Authorization': sessionId,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ email, username }),
-            credentials: 'include'
-        });
-        const data = await response.json();
-        if (response.ok) {
-            alert('회원정보가 성공적으로 업데이트되었습니다.');
-        } else {
-            alert('회원정보 업데이트에 실패했습니다: ' + data.message);
-        }
-    } catch (error) {
-        console.error('에러:', error);
-        alert('회원정보 업데이트 중 오류가 발생했습니다.');
-    }
-}
-
-async function deleteUser() {
-    const sessionId = sessionStorage.getItem('sessionId');
-    try {
-        const response = await fetch('http://localhost:3000/users/delete', {
-            method: 'DELETE',
-            credentials: 'include',
-            headers: { 'Authorization': sessionId }
-        });
-        const data = await response.json();
-        if (response.ok) {
-            sessionStorage.removeItem('sessionId');
-            alert('회원탈퇴가 완료되었습니다.');
-            window.location.href = '/page/login.html'; // 로그인 페이지로 리다이렉트
-        } else {
-            alert('회원탈퇴에 실패했습니다: ' + data.message);
-        }
-    } catch (error) {
-        console.error('에러:', error);
-        alert('회원탈퇴 중 오류가 발생했습니다.');
-    }
-}

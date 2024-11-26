@@ -1,4 +1,4 @@
-import './dropdown.js';
+import { fetchUserProfile } from './dropdown.js';
 
 // URL에서 게시글 ID 가져오기
 const urlParams = new URLSearchParams(window.location.search);
@@ -14,37 +14,34 @@ async function loadPost() {
                 'Authorization': sessionId,
             }
         });
-        
+
         if (!response.ok) {
             throw new Error('Failed to fetch post');
         }
-        
         const post = await response.json();
-        
         // 게시글 내용 채우기
         document.querySelector('#postTitle').textContent = post.title;
+        document.querySelector('#titleProfileImage').src = post.profileImage
         document.querySelector('#postUserName').textContent = post.username;
         document.querySelector('#postDate').textContent = new Date(post.createdAt).toLocaleString();
         document.querySelector('.pre').textContent = post.content;
-        
         if (post.image) {
-            document.querySelector('#postImg').src = post.image;
+            const postImg = document.querySelector('#postImg');
+            postImg.src = post.image;
+            postImg.style.display = 'block';
+        } else {
+            document.querySelector('#postImg').style.display = 'none';
         }
-        
         // 좋아요, 조회수, 댓글수 업데이트
         document.querySelectorAll('#likeC').textContent = post.likes;
         document.querySelectorAll('#viewC').textContent = post.views;
         document.querySelectorAll('#replyC').textContent = post.comments;
-        
-        // 작성자일 경우에만 수정/삭제 버튼 표시
-        if (post.userId === sessionStorage.getItem('sessionId')) {
-            const buttons = document.querySelector('.row_c:nth-child(3)');
-            buttons.style.display = 'flex';
-        }
-        
+        /* // 작성자일 경우에만 수정/삭제 버튼 표시
+        if (post.userId !== sessionId) {
+            alert('수정 권한이 없습니다.');
+        } */
         // 댓글 불러오기
         loadComments();
-        
     } catch (error) {
         console.error('Error loading post:', error);
     }
@@ -61,15 +58,15 @@ async function loadComments() {
                 'Authorization': sessionId,
             }
         });
-        
+
         if (!response.ok) {
             throw new Error('Failed to fetch comments');
         }
-        
+
         const comments = await response.json();
         const commentsContainer = document.querySelector('#replyContainer');
         commentsContainer.innerHTML = ''; // 기존 댓글 비우기
-        
+
         comments.forEach(comment => {
             const commentElement = `
                 <div class="row">
@@ -126,11 +123,11 @@ document.querySelector('.buttons').addEventListener('click', async () => {
             body: JSON.stringify({ content }),
             credentials: 'include'
         });
-        
+
         if (!response.ok) {
             throw new Error('Failed to create comment');
         }
-        
+
         // 댓글 등록 후 목록 새로고침
         document.querySelector('textarea').value = '';
         loadComments();
@@ -140,7 +137,10 @@ document.querySelector('.buttons').addEventListener('click', async () => {
 });
 
 // 페이지 로드 시 게시글 불러오기
-document.addEventListener('DOMContentLoaded', loadPost);
+document.addEventListener('DOMContentLoaded', () => {
+    fetchUserProfile();
+    loadPost();
+});
 
 // 게시글 수정/삭제 함수
 function editPost() {
@@ -160,7 +160,7 @@ async function deletePost() {
                 'Authorization': sessionId,
             }
         });
-        
+
         if (response.ok) {
             alert('게시글이 삭제되었습니다.');
             window.location.href = '/page/board.html';
@@ -186,7 +186,7 @@ async function editComment(commentId) {
             body: JSON.stringify({ content: newContent }),
             credentials: 'include'
         });
-        
+
         if (response.ok) {
             loadComments();
         }
@@ -207,7 +207,7 @@ async function deleteComment(commentId) {
                 'Authorization': sessionId,
             }
         });
-        
+
         if (response.ok) {
             loadComments();
         }

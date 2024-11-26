@@ -21,6 +21,7 @@ export default [
         },
         ignores: [
             'node_modules/',
+            'tmp/',
             'package.json',
             'package-lock.json',
             'yarn-error.json',
