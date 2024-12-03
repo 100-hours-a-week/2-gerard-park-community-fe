@@ -3,7 +3,7 @@ import { fetchUserProfile } from './dropdown.js';
 document.addEventListener('DOMContentLoaded', () => {
     const editProfileForm = document.getElementById('editProfileForm');
     const deleteAccountBtn = document.getElementById('deleteAccountBtn');
-    const deleteModal = document.getElementById('deleteModal');
+    const deleteUserModal = document.getElementById('deleteUserModal');
     const confirmDelete = document.getElementById('confirmDelete');
     const cancelDelete = document.getElementById('cancelDelete');
     const profileUpload = document.getElementById('profile');
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 회원탈퇴 버튼 클릭
     deleteAccountBtn.addEventListener('click', () => {
-        deleteModal.style.display = 'block';
+        deleteUserModal.style.display = 'block';
     });
 
     // 회원탈퇴 확인
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 회원탈퇴 취소
     cancelDelete.addEventListener('click', () => {
-        deleteModal.style.display = 'none';
+        deleteUserModal.style.display = 'none';
     });
 
     // 프로필 이미지 업로드 및 프리뷰

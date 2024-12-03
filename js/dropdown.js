@@ -2,21 +2,25 @@ const dropBtn = document.querySelector('#dropButton');
 const dropMenu = document.querySelector('.dropdown-content');
 const logoutMenu = document.querySelector('#logout');
 const dropProfileImage = document.querySelector('#dropProfileImage');
+const home = document.querySelector('div h1');
 dropBtn.addEventListener('click', () => {
     dropMenu.classList.toggle('show');
 });
 logoutMenu.addEventListener('click', () => {
     logout();
 });
+home.addEventListener('click', () => {
+    window.location.href = '/page/board.html';
+});
 
 export async function fetchUserProfile() {
     const sessionId = sessionStorage.getItem('sessionId');
 
-    if (!sessionId) {
+    /* if (!sessionId) {
         alert("세션이 만료되었습니다. 다시 로그인해 주세요.");
         window.location.href = '/page/login.html';
         return;
-    }
+    } */
 
     try {
         const response = await fetch('http://localhost:3000/users/user-info', {

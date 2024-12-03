@@ -1,5 +1,6 @@
 import { fetchUserProfile } from './dropdown.js';
-
+const urlParams = new URLSearchParams(window.location.search);
+const postId = urlParams.get('id');
 document.addEventListener('DOMContentLoaded', () => {
     const editPostForm = document.getElementById('editPostForm');
     const sessionId = sessionStorage.getItem('sessionId');
@@ -22,8 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function fetchPostInfo() {
     try {
-        const urlParams = new URLSearchParams(window.location.search);
-        const postId = urlParams.get('id');
         const sessionId = sessionStorage.getItem('sessionId');
 
         if (!postId) {
@@ -42,7 +41,7 @@ async function fetchPostInfo() {
         if (response.ok) {
             const data = await response.json();
             document.getElementById('postTitle').value = data.title;
-            document.getElementById('postContent').value = data.content;            
+            document.getElementById('postContent').value = data.content;
             // 이미지가 있는 경우 미리보기 표시
             if (data.image) {
                 const imagePreview = document.createElement('img');
@@ -70,7 +69,7 @@ async function updatePostInfo() {
 
         const title = document.getElementById('postTitle').value;
         const content = document.getElementById('postContent').value;
-        const image = document.getElementById('postImg').files[0];
+        const image = document.querySelector('input[type="file"]');
 
         if (!title.trim() || !content.trim()) {
             alert('제목과 내용을 모두 입력해주세요.');
@@ -80,8 +79,8 @@ async function updatePostInfo() {
         const formData = new FormData();
         formData.append('title', title);
         formData.append('content', content);
-        if (image) {
-            formData.append('image', image);
+        if (image && image.files[0]) {
+            formData.append('image', image.files[0]);
         }
 
         const response = await fetch(`http://localhost:3000/board/post/${postId}`, {
@@ -93,7 +92,7 @@ async function updatePostInfo() {
             credentials: 'include',
         });
 
-        const data = await response.json();        
+        const data = await response.json();
         if (response.ok) {
             alert('게시글이 성공적으로 수정되었습니다.');
             window.location.href = `/page/viewpost.html?id=${postId}`;
@@ -111,14 +110,11 @@ document.getElementById('postImg').addEventListener('change', (e) => {
     const file = e.target.files[0];
     if (file) {
         const reader = new FileReader();
-        reader.onload = function(e) {
-            const previewContainer = document.querySelector('.inputBox div');
-            previewContainer.innerHTML = ''; // 기존 미리보기 제거
-            
-            const imagePreview = document.createElement('img');
+        reader.onload = (e) => {
+            const imagePreview = document.getElementById('imagePreview');
             imagePreview.src = e.target.result;
+            imagePreview.style.display = 'block';
             imagePreview.style.maxWidth = '200px';
-            previewContainer.appendChild(imagePreview);
         };
         reader.readAsDataURL(file);
     }
@@ -126,5 +122,5 @@ document.getElementById('postImg').addEventListener('change', (e) => {
 
 // 뒤로가기
 document.querySelector('#backBtn').addEventListener('click', () => {
-    window.history.back();
+    window.location.href = `/page/viewpost.html?id=${postId}`;
 });

@@ -65,3 +65,7 @@ makepostForm.addEventListener('submit', async (e) => {
         alert('게시글 작성에 실패했습니다.');
     }
 });
+//뒤로가기
+document.querySelector('#backBtn').addEventListener('click', () => {
+    window.location.href = '/page/board.html';
+});

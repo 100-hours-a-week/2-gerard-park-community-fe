@@ -1,8 +1,39 @@
 import { fetchUserProfile } from './dropdown.js';
-
 // URL에서 게시글 ID 가져오기
 const urlParams = new URLSearchParams(window.location.search);
 const postId = urlParams.get('id');
+
+// 페이지 로드 시 게시글 불러오기
+document.addEventListener('DOMContentLoaded', () => {
+    const editPostBtn = document.getElementById('editPostBtn');
+    const deletePostBtn = document.getElementById('deletePostBtn');
+    const deletePostModal = document.getElementById('deletePostModal');
+    const confirmDeletePost = document.getElementById('confirmDeletePost');
+    const cancelDeletePost = document.getElementById('cancelDeletePost');
+
+    fetchUserProfile();
+    loadPost();
+
+    // 게시글 수정 버튼 클릭
+    editPostBtn.addEventListener('click', () => {
+        editPost();
+    });
+
+    // 게시글 삭제 버튼 클릭
+    deletePostBtn.addEventListener('click', () => {
+        deletePostModal.style.display = 'block';
+    });
+
+    // 게시글 삭제 확인
+    confirmDeletePost.addEventListener('click', () => {
+        deletePost();
+    });
+
+    // 게시글 삭제 취소
+    cancelDeletePost.addEventListener('click', () => {
+        deletePostModal.style.display = 'none';
+    });
+});
 
 async function loadPost() {
     const sessionId = sessionStorage.getItem('sessionId');
@@ -21,7 +52,9 @@ async function loadPost() {
         const post = await response.json();
         // 게시글 내용 채우기
         document.querySelector('#postTitle').textContent = post.title;
-        document.querySelector('#titleProfileImage').src = post.profileImage
+        if (post.profileImage) {
+            document.querySelector('#titleProfileImage').src = post.profileImage
+        }
         document.querySelector('#postUserName').textContent = post.username;
         document.querySelector('#postDate').textContent = new Date(post.createdAt).toLocaleString();
         document.querySelector('.pre').textContent = post.content;
@@ -33,22 +66,26 @@ async function loadPost() {
             document.querySelector('#postImg').style.display = 'none';
         }
         // 좋아요, 조회수, 댓글수 업데이트
-        document.querySelectorAll('#likeC').textContent = post.likes;
-        document.querySelectorAll('#viewC').textContent = post.views;
-        document.querySelectorAll('#replyC').textContent = post.comments;
-        /* // 작성자일 경우에만 수정/삭제 버튼 표시
-        if (post.userId !== sessionId) {
-            alert('수정 권한이 없습니다.');
-        } */
+        document.querySelector('#likeC').textContent = post.likes;
+        document.querySelector('#viewC').textContent = post.views;
+        document.querySelector('#replyC').textContent = post.replies;
+        // 작성자일 경우에만 수정/삭제 버튼 표시
+        if (post.userId !== JSON.parse(sessionId).sessionId) {
+            document.getElementById('editPostBtn').style.display = 'none';
+            document.getElementById('deletePostBtn').style.display = 'none';
+        } else {
+            document.getElementById('editPostBtn').style.display = 'block';
+            document.getElementById('deletePostBtn').style.display = 'block';
+        }
         // 댓글 불러오기
-        loadComments();
+        loadReplies();
     } catch (error) {
         console.error('Error loading post:', error);
     }
 }
 
 // 댓글 목록 불러오기
-async function loadComments() {
+async function loadReplies() {
     const sessionId = sessionStorage.getItem('sessionId');
     try {
         const response = await fetch(`http://localhost:3000/board/post/${postId}/replies`, {
@@ -60,53 +97,54 @@ async function loadComments() {
         });
 
         if (!response.ok) {
-            throw new Error('Failed to fetch comments');
+            throw new Error('Failed to fetch replies');
         }
 
-        const comments = await response.json();
-        const commentsContainer = document.querySelector('#replyContainer');
-        commentsContainer.innerHTML = ''; // 기존 댓글 비우기
+        const replies = await response.json();
+        const repliesContainer = document.querySelector('#replyContainer');
+        repliesContainer.innerHTML = ''; // 기존 댓글 비우기
 
-        comments.forEach(comment => {
-            const commentElement = `
+        replies.forEach(reply => {
+            const replyElement = `
                 <div class="row">
                     <div class="rel" style="flex: 3;">
                         <div class="row">
                             <div class="row_c" style="justify-content: flex-start;flex: 1;">
-                                <img src="../lib/defaultProfilePic.jpg" class="imgProfile">
+                                <img src=${reply.profileImage ? reply.profileImage : `"../lib/defaultProfilePic.jpg"`} class="imgProfile">
                                 <div style="margin-left: 10px;font-weight: 500;font-size: large;">
-                                    ${comment.username}
+                                    ${reply.username}
                                 </div>
                             </div>
                             <div class="row_c" style="justify-content: flex-start;flex: 2;">
-                                ${new Date(comment.createdAt).toLocaleString()}
+                                ${new Date(reply.createdAt).toLocaleString()}
                             </div>
                         </div>
                         <div style="margin: 10px;">
-                            ${comment.content}
+                            ${reply.content}
                         </div>
                     </div>
-                    ${comment.userId === sessionStorage.getItem('sessionId') ? `
+                    ${reply.userId === JSON.parse(sessionId).sessionId ? `
                         <div class="row_c" style="flex: 1;">
-                            <button onclick="editComment(${comment.id})">수정</button>
-                            <button onclick="deleteComment(${comment.id})">삭제</button>
+                            <button onclick="editReply(${reply.id})">수정</button>
+                            <button onclick="deleteReply(${reply.id})">삭제</button>
                         </div>
                     ` : ''}
                 </div>
             `;
-            commentsContainer.innerHTML += commentElement;
+            repliesContainer.innerHTML += replyElement;
         });
+
     } catch (error) {
-        console.error('Error loading comments:', error);
+        console.error('Error loading replies:', error);
     }
 }
 //뒤로가기
 document.querySelector('#backBtn').addEventListener('click', () => {
-    window.history.back();
+    window.location.href = '/page/board.html';
 });
 
 // 댓글 등록
-document.querySelector('.buttons').addEventListener('click', async () => {
+document.querySelector('#replyBtn').addEventListener('click', async () => {
     const content = document.querySelector('textarea').value;
     if (!content.trim()) {
         alert('댓글 내용을 입력해주세요.');
@@ -125,21 +163,15 @@ document.querySelector('.buttons').addEventListener('click', async () => {
         });
 
         if (!response.ok) {
-            throw new Error('Failed to create comment');
+            throw new Error('Failed to create reply');
         }
 
         // 댓글 등록 후 목록 새로고침
         document.querySelector('textarea').value = '';
-        loadComments();
+        loadPost();
     } catch (error) {
-        console.error('Error creating comment:', error);
+        console.error('Error creating reply:', error);
     }
-});
-
-// 페이지 로드 시 게시글 불러오기
-document.addEventListener('DOMContentLoaded', () => {
-    fetchUserProfile();
-    loadPost();
 });
 
 // 게시글 수정/삭제 함수
@@ -148,9 +180,6 @@ function editPost() {
 }
 
 async function deletePost() {
-    if (!confirm('정말 삭제하시겠습니까?')) {
-        return;
-    }
     const sessionId = sessionStorage.getItem('sessionId');
     try {
         const response = await fetch(`http://localhost:3000/board/post/${postId}`, {
@@ -171,13 +200,13 @@ async function deletePost() {
 }
 
 // 댓글 수정/삭제 함수
-async function editComment(commentId) {
+window.editReply = async function (replyId) {
     const newContent = prompt('수정할 내용을 입력하세요.');
     if (!newContent) return;
 
     const sessionId = sessionStorage.getItem('sessionId');
     try {
-        const response = await fetch(`http://localhost:3000/board/reply/${commentId}`, {
+        const response = await fetch(`http://localhost:3000/board/reply/${replyId}`, {
             method: 'PATCH',
             headers: {
                 'Authorization': sessionId,
@@ -188,30 +217,43 @@ async function editComment(commentId) {
         });
 
         if (response.ok) {
-            loadComments();
+            loadPost();
         }
     } catch (error) {
-        console.error('Error updating comment:', error);
+        console.error('Error updating reply:', error);
     }
 }
 
-async function deleteComment(commentId) {
-    if (!confirm('댓글을 삭제하시겠습니까?')) return;
-
+window.deleteReply = async function (replyId) {
     const sessionId = sessionStorage.getItem('sessionId');
-    try {
-        const response = await fetch(`http://localhost:3000/board/reply/${commentId}`, {
-            method: 'DELETE',
-            credentials: 'include',
-            headers: {
-                'Authorization': sessionId,
-            }
-        });
+    const deleteReplyModal = document.getElementById('deleteReplyModal');
+    const confirmDeleteReply = document.getElementById('confirmDeleteReply');
+    const cancelDeleteReply = document.getElementById('cancelDeleteReply');
 
-        if (response.ok) {
-            loadComments();
+    deleteReplyModal.style.display = 'block';
+
+    // 댓글 삭제 확인
+    confirmDeleteReply.addEventListener('click', async () => {
+        try {
+            const response = await fetch(`http://localhost:3000/board/reply/${replyId}`, {
+                method: 'DELETE',
+                credentials: 'include',
+                headers: {
+                    'Authorization': sessionId,
+                }
+            });
+
+            if (response.ok) {
+                deleteReplyModal.style.display = 'none';
+                loadPost();
+            }
+        } catch (error) {
+            console.error('Error deleting reply:', error);
         }
-    } catch (error) {
-        console.error('Error deleting comment:', error);
-    }
+    });
+
+    // 댓글 삭제 취소
+    cancelDeleteReply.addEventListener('click', () => {
+        deleteReplyModal.style.display = 'none';
+    });
 }
