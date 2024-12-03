@@ -272,8 +272,29 @@ a {
 .modal-content {
     background-color: #fefefe;
     margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
+    padding: 50px;
+    border-radius: 8px;
     width: 80%;
-    max-width: 500px;
+    max-width: 450px;
+    text-align: center;
+}
+
+.modal-content p,h1 {
+    margin: 25px 0;
+}
+
+.modal-content button {
+    padding: 8px 40px;
+    margin: 0 5px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    background-color: #242424;
+    color:white;
+}
+
+.modal-content button:last-child {
+    background-color: #C4A5FA;
+    color: #333;
 }

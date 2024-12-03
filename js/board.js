@@ -42,7 +42,7 @@ async function loadPosts() {
                                 </div>
                                 <div class="row_c">
                                     <p>댓글</p>
-                                    <p>${post.comments || 0}</p>
+                                    <p>${post.replies || 0}</p>
                                 </div>
                                 <div class="row_c">
                                     <p>조회수</p>

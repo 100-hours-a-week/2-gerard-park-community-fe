@@ -125,8 +125,8 @@ async function loadReplies() {
                     </div>
                     ${reply.userId === JSON.parse(sessionId).sessionId ? `
                         <div class="row_c" style="flex: 1;">
-                            <button onclick="editReply(${reply.id})">수정</button>
-                            <button onclick="deleteReply(${reply.id})">삭제</button>
+                            <button onclick="editReply(${reply.id})" class="edbuttons">수정</button>
+                            <button onclick="deleteReply(${reply.id})" class="edbuttons">삭제</button>
                         </div>
                     ` : ''}
                 </div>
