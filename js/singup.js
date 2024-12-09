@@ -116,7 +116,7 @@ signupForm.addEventListener('submit', async (e) => {
 
         const data = await response.json();
         console.log('회원가입 성공:', data);
-        window.location.href = '/page/login.html';
+        window.location.href = '/login';
     } catch (error) {
         console.error('회원가입 실패:', error);
         alert('회원가입에 실패했습니다.');

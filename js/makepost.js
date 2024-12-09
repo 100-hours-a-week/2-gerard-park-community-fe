@@ -1,4 +1,3 @@
-import * as checkValidate from './check.js';
 import { fetchUserProfile } from './dropdown.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -10,7 +9,7 @@ const sessionId = sessionStorage.getItem('sessionId');
 
 if (!sessionId) {
     alert('세션이 만료되었습니다. 다시 로그인해 주세요.');
-    window.location.href = '/page/login.html';
+    window.location.href = '/login';
 }
 
 makepostForm.addEventListener('submit', async (e) => {
@@ -59,7 +58,7 @@ makepostForm.addEventListener('submit', async (e) => {
 
         const data = await response.json();
         alert('게시글이 작성되었습니다.');
-        window.location.href = `/page/viewpost.html?id=${data.id}`;
+        window.location.href = `/post?id=${data.id}`;
     } catch (error) {
         console.error('Error:', error);
         alert('게시글 작성에 실패했습니다.');
@@ -67,5 +66,5 @@ makepostForm.addEventListener('submit', async (e) => {
 });
 //뒤로가기
 document.querySelector('#backBtn').addEventListener('click', () => {
-    window.location.href = '/page/board.html';
+    window.location.href = '/board';
 });

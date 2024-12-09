@@ -10,7 +10,7 @@ logoutMenu.addEventListener('click', () => {
     logout();
 });
 home.addEventListener('click', () => {
-    window.location.href = '/page/board.html';
+    window.location.href = '/board';
 });
 
 export async function fetchUserProfile() {
@@ -18,7 +18,7 @@ export async function fetchUserProfile() {
 
     /* if (!sessionId) {
         alert("세션이 만료되었습니다. 다시 로그인해 주세요.");
-        window.location.href = '/page/login.html';
+        window.location.href = '/login';
         return;
     } */
 
@@ -59,7 +59,7 @@ async function logout() {
         console.log(data);
         sessionStorage.removeItem('sessionId');
         alert('로그아웃');
-        window.location.href = '/page/login.html';
+        window.location.href = '/login';
     } catch (error) {
         console.error('에러:', error);
     }

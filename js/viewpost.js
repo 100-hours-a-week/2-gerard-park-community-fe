@@ -140,7 +140,7 @@ async function loadReplies() {
 }
 //뒤로가기
 document.querySelector('#backBtn').addEventListener('click', () => {
-    window.location.href = '/page/board.html';
+    window.location.href = '/board';
 });
 
 // 댓글 등록
@@ -176,7 +176,7 @@ document.querySelector('#replyBtn').addEventListener('click', async () => {
 
 // 게시글 수정/삭제 함수
 function editPost() {
-    window.location.href = `/page/editpost.html?id=${postId}`;
+    window.location.href = `/editpost?id=${postId}`;
 }
 
 async function deletePost() {
@@ -192,7 +192,7 @@ async function deletePost() {
 
         if (response.ok) {
             alert('게시글이 삭제되었습니다.');
-            window.location.href = '/page/board.html';
+            window.location.href = '/board';
         }
     } catch (error) {
         console.error('Error deleting post:', error);

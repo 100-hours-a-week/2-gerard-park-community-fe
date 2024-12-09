@@ -60,7 +60,7 @@ async function fetchUserInfo() {
 
     if (!sessionId) {
         alert("세션이 만료되었습니다. 다시 로그인해 주세요.");
-        window.location.href = '/page/login.html';
+        window.location.href = '/login';
         return;
     }
 
@@ -82,12 +82,12 @@ async function fetchUserInfo() {
         } else {
             console.error('사용자 정보를 불러오는데 실패했습니다.');
             //alert("사용자 정보를 불러오지 못했습니다.");
-            //window.location.href = '/page/login.html';
+            //window.location.href = '/login';
         }
     } catch (error) {
         console.error('에러:', error);
         //alert("사용자 정보를 불러오는 중 오류가 발생했습니다.");
-        //window.location.href = '/page/login.html';
+        //window.location.href = '/login';
     }
 }
 
@@ -143,7 +143,7 @@ async function deleteUser() {
         if (response.ok) {
             sessionStorage.removeItem('sessionId');
             alert('회원탈퇴가 완료되었습니다.');
-            window.location.href = '/page/login.html'; // 로그인 페이지로 리다이렉트
+            window.location.href = '/login'; // 로그인 페이지로 리다이렉트
         } else {
             alert('회원탈퇴에 실패했습니다: ' + data.message);
         }

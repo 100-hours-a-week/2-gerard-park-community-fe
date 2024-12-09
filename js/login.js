@@ -46,7 +46,7 @@ loginForm.addEventListener('submit', async (e) => {
         sessionStorage.setItem('sessionId', test);
         alert('로그인');
         //로그인 성공 후 처리 (예: 메인 페이지로 리다이렉트)
-        window.location.href = '/page/board.html';
+        window.location.href = '/board';
     } catch (error) {
         console.error('에러:', error);
     }

@@ -2,19 +2,19 @@ import { fetchUserProfile } from './dropdown.js';
 
 async function loadPosts() {
     try {
-        // 세션 확인
+        /* // 세션 확인
         const sessionId = sessionStorage.getItem('sessionId');
         
         if (!sessionId) {
             alert('잘못된 접근입니다!');
-            window.location.href = '/page/login.html';
+            window.location.href = '/login';
             return;
-        }
+        } */
 
         const response = await fetch('http://localhost:3000/board/posts', {
             method: 'GET',
             headers: {
-                'Authorization': sessionId
+                //'Authorization': sessionId
             },
             credentials: 'include'
         });
@@ -78,7 +78,7 @@ async function loadPosts() {
 // 클릭한 게시글로 이동 함수
 async function viewSelectedPost(e) {
     const selectedPostId = e.currentTarget.dataset.postId;
-    window.location.href = `/page/viewpost.html?id=${selectedPostId}`;
+    window.location.href = `/post?id=${selectedPostId}`;
 }
 
 // 게시글 작성 버튼 이벤트 리스너
@@ -86,10 +86,10 @@ document.querySelector('#makePost').addEventListener('click', () => {
     const sessionId = sessionStorage.getItem('sessionId');
     if (!sessionId) {
         alert('로그인이 필요합니다.');
-        window.location.href = '/page/login.html';
+        window.location.href = '/login';
         return;
     }
-    window.location.href = '/page/makepost.html';
+    window.location.href = '/makepost';
 });
 
 // 페이지 로드 시 게시글 목록 불러오기
