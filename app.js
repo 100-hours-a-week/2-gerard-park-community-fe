@@ -11,6 +11,10 @@ const PORT = 5500;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname)));
 
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'page', 'login.html'));
+});
+
 app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, 'page', 'login.html'));
 });
