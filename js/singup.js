@@ -110,11 +110,10 @@ signupForm.addEventListener('submit', async (e) => {
             body: formData
         });
 
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-
         const data = await response.json();
+        if (!response.ok) {
+            throw new Error(data.message);
+        }
         console.log('회원가입 성공:', data);
         window.location.href = '/login';
     } catch (error) {

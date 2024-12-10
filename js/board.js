@@ -19,11 +19,10 @@ async function loadPosts() {
             credentials: 'include'
         });
 
-        if (!response.ok) {
-            throw new Error('Failed to fetch posts');
-        }
-
         const posts = await response.json();
+        if (!response.ok) {
+            throw new Error(`Failed to fetch post. ${posts.message}`);
+        }
         const boardList = document.getElementById('boardList');
         boardList.innerHTML = ''; // Clear existing content
 

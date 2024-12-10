@@ -38,8 +38,8 @@ async function fetchPostInfo() {
             credentials: 'include',
         });
 
+        const data = await response.json();
         if (response.ok) {
-            const data = await response.json();
             document.getElementById('postTitle').value = data.title;
             document.getElementById('postContent').value = data.content;
             // 이미지가 있는 경우 미리보기 표시
@@ -50,9 +50,9 @@ async function fetchPostInfo() {
                 document.querySelector('#imgP').appendChild(imagePreview);
             }
         } else {
-            console.error('게시글 정보를 불러오는데 실패했습니다.');
             alert('게시글 정보를 불러오지 못했습니다.');
             window.location.href = '/board';
+            throw new Error(data.message);
         }
     } catch (error) {
         console.error('에러:', error);

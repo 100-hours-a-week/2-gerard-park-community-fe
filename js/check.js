@@ -14,7 +14,7 @@ export function isMatch(pw1, pw2) {
     return pw1 == pw2;
 }
 export function isNickname(str) {
-    return /^[A-Za-z\d_][A-Za-z\d_]{0,9}$/.test(str);
+    return /^[ㄱ-ㅎ가-힣A-Za-z\d_][ㄱ-ㅎ가-힣A-Za-z\d_]{0,9}$/.test(str);
 }
 export function st(str) {
 

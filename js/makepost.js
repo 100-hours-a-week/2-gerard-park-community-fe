@@ -52,11 +52,10 @@ makepostForm.addEventListener('submit', async (e) => {
             credentials: 'include' // 쿠키 포함
         });
 
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-
         const data = await response.json();
+        if (!response.ok) {
+            throw new Error(data.message);
+        }
         alert('게시글이 작성되었습니다.');
         window.location.href = `/post?id=${data.id}`;
     } catch (error) {

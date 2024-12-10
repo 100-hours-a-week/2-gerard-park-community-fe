@@ -46,10 +46,10 @@ async function loadPost() {
             }
         });
 
-        if (!response.ok) {
-            throw new Error('Failed to fetch post');
-        }
         const post = await response.json();
+        if (!response.ok) {
+            throw new Error(`Failed to fetch post. ${post.message}`);
+        }
         // 게시글 내용 채우기
         document.querySelector('#postTitle').textContent = post.title;
         if (post.profileImage) {
@@ -96,11 +96,10 @@ async function loadReplies() {
             }
         });
 
-        if (!response.ok) {
-            throw new Error('Failed to fetch replies');
-        }
-
         const replies = await response.json();
+        if (!response.ok) {
+            throw new Error(`Failed to fetch replies. ${replies.message}`);
+        }
         const repliesContainer = document.querySelector('#replyContainer');
         repliesContainer.innerHTML = ''; // 기존 댓글 비우기
 
@@ -162,8 +161,9 @@ document.querySelector('#replyBtn').addEventListener('click', async () => {
             credentials: 'include'
         });
 
+        const reply = await response.json();
         if (!response.ok) {
-            throw new Error('Failed to create reply');
+            throw new Error(`Failed to create reply. ${reply.message}`);
         }
 
         // 댓글 등록 후 목록 새로고침
@@ -190,9 +190,13 @@ async function deletePost() {
             }
         });
 
+        const post = await response.json();
         if (response.ok) {
+            console.log(post.message);
             alert('게시글이 삭제되었습니다.');
             window.location.href = '/board';
+        } else {
+            throw new Error(post.message);
         }
     } catch (error) {
         console.error('Error deleting post:', error);
@@ -216,8 +220,12 @@ window.editReply = async function (replyId) {
             credentials: 'include'
         });
 
+        const reply = await response.json();
         if (response.ok) {
+            console.log(reply.message);
             loadPost();
+        } else {
+            throw new Error(reply.message);
         }
     } catch (error) {
         console.error('Error updating reply:', error);
@@ -243,9 +251,13 @@ window.deleteReply = async function (replyId) {
                 }
             });
 
+            const reply = await response.json();
             if (response.ok) {
                 deleteReplyModal.style.display = 'none';
+                console.log(reply.message);
                 loadPost();
+            } else {
+                throw new Error(reply.message);
             }
         } catch (error) {
             console.error('Error deleting reply:', error);

@@ -35,10 +35,10 @@ loginForm.addEventListener('submit', async (e) => {
             body: JSON.stringify({ email, password }),
             credentials: 'include', // 쿠키 포함
         });
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
         const data = await response.json();
+        if (!response.ok) {
+            throw new Error(data.message);
+        }
         console.log('로그인 성공:', data);
         //document.cookie = `sessionId=${data.sessionId}; path=/;`;
         // 세션 ID를 세션 스토리지에 저장
