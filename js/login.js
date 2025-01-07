@@ -82,5 +82,6 @@ loginForm.addEventListener('submit', async (e) => {
         window.location.href = '/board';
     } catch (error) {
         console.error('에러:', error);
+        alert('로그인에 실패했습니다.\n'+error);
     }
 });

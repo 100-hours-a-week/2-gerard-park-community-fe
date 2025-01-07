@@ -127,7 +127,7 @@ async function updateUserInfo() {
         }
     } catch (error) {
         console.error('에러:', error);
-        alert('회원정보 업데이트 중 오류가 발생했습니다.');
+        alert('회원정보 업데이트 중 오류가 발생했습니다.\n'+error);
     }
 }
 

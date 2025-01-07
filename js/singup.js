@@ -216,7 +216,7 @@ signupForm.addEventListener('submit', async (e) => {
         window.location.href = '/login';
     } catch (error) {
         console.error('회원가입 실패:', error);
-        alert('회원가입에 실패했습니다.');
+        alert('회원가입에 실패했습니다.\n'+error);
     }
 });
 //뒤로가기
