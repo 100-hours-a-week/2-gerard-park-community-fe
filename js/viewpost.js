@@ -10,9 +10,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const deletePostModal = document.getElementById('deletePostModal');
     const confirmDeletePost = document.getElementById('confirmDeletePost');
     const cancelDeletePost = document.getElementById('cancelDeletePost');
+    const likeBtn = document.getElementById('like');
 
     fetchUserProfile();
-    loadPost();
+    loadPostFirst();
 
     // 게시글 수정 버튼 클릭
     editPostBtn.addEventListener('click', () => {
@@ -33,9 +34,13 @@ document.addEventListener('DOMContentLoaded', () => {
     cancelDeletePost.addEventListener('click', () => {
         deletePostModal.style.display = 'none';
     });
+
+    likeBtn.addEventListener('click', () => {
+        handleLike();
+    });
 });
 
-async function loadPost() {
+async function loadPostFirst() {
     const sessionId = sessionStorage.getItem('sessionId');
     try {
         const response = await fetch(`http://localhost:3000/board/post/${postId}`, {
@@ -52,6 +57,7 @@ async function loadPost() {
         }
         // 게시글 내용 채우기
         document.querySelector('#postTitle').textContent = post.title;
+        document.getElementById('like').textContent = post.emoji;
         if (post.profileImage) {
             document.querySelector('#titleProfileImage').src = post.profileImage
         }
@@ -65,6 +71,41 @@ async function loadPost() {
         } else {
             document.querySelector('#postImg').style.display = 'none';
         }
+        // 좋아요, 조회수, 댓글수 업데이트
+        document.querySelector('#likeC').textContent = post.likes;
+        document.querySelector('#viewC').textContent = post.views;
+        document.querySelector('#replyC').textContent = post.replies;
+        // 작성자일 경우에만 수정/삭제 버튼 표시
+        if (post.userId !== JSON.parse(sessionId).sessionId) {
+            document.getElementById('editPostBtn').style.display = 'none';
+            document.getElementById('deletePostBtn').style.display = 'none';
+        } else {
+            document.getElementById('editPostBtn').style.display = 'block';
+            document.getElementById('deletePostBtn').style.display = 'block';
+        }
+        // 댓글 불러오기
+        loadReplies();
+    } catch (error) {
+        console.error('Error loading post:', error);
+    }
+}
+
+async function loadPost() {
+    const sessionId = sessionStorage.getItem('sessionId');
+    try {
+        const response = await fetch(`http://localhost:3000/board/post/${postId}`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Authorization': sessionId,
+            }
+        });
+
+        const post = await response.json();
+        if (!response.ok) {
+            throw new Error(`Failed to fetch post. ${post.message}`);
+        }
+        document.getElementById('like').textContent = post.emoji;
         // 좋아요, 조회수, 댓글수 업데이트
         document.querySelector('#likeC').textContent = post.likes;
         document.querySelector('#viewC').textContent = post.views;
@@ -223,7 +264,7 @@ window.editReply = async function (replyId) {
         const reply = await response.json();
         if (response.ok) {
             console.log(reply.message);
-            loadPost();
+            loadReplies();
         } else {
             throw new Error(reply.message);
         }
@@ -268,4 +309,25 @@ window.deleteReply = async function (replyId) {
     cancelDeleteReply.addEventListener('click', () => {
         deleteReplyModal.style.display = 'none';
     });
+}
+
+// 좋아요 처리 함수
+async function handleLike() {
+    try {
+        const sessionId = sessionStorage.getItem('sessionId');
+        const response = await fetch(`http://localhost:3000/board/post/${postId}/like`, {
+            method: 'POST',
+            headers: {
+                'Authorization': sessionId
+            },
+            credentials: 'include'
+        });
+
+        if (response.ok) {
+            // 좋아요 상태 업데이트를 위해 게시글 목록 새로고침
+            loadPost();
+        }
+    } catch (error) {
+        console.error('Error handling like:', error);
+    }
 }
