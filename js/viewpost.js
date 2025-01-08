@@ -1,4 +1,4 @@
-import { fetchUserProfile } from './dropdown.js';
+import { fetchUserProfile, API_URL } from './dropdown.js';
 // URL에서 게시글 ID 가져오기
 const urlParams = new URLSearchParams(window.location.search);
 const postId = urlParams.get('id');
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
 async function loadPostFirst() {
     const sessionId = sessionStorage.getItem('sessionId');
     try {
-        const response = await fetch(`http://localhost:3000/board/post/${postId}`, {
+        const response = await fetch(`${API_URL}/board/post/${postId}`, {
             method: 'GET',
             credentials: 'include',
             headers: {
@@ -93,7 +93,7 @@ async function loadPostFirst() {
 async function loadPost() {
     const sessionId = sessionStorage.getItem('sessionId');
     try {
-        const response = await fetch(`http://localhost:3000/board/post/${postId}`, {
+        const response = await fetch(`${API_URL}/board/post/${postId}`, {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -129,7 +129,7 @@ async function loadPost() {
 async function loadReplies() {
     const sessionId = sessionStorage.getItem('sessionId');
     try {
-        const response = await fetch(`http://localhost:3000/board/post/${postId}/replies`, {
+        const response = await fetch(`${API_URL}/board/post/${postId}/replies`, {
             method: 'GET',
             credentials: 'include',
             headers: {
@@ -192,7 +192,7 @@ document.querySelector('#replyBtn').addEventListener('click', async () => {
     }
     const sessionId = sessionStorage.getItem('sessionId');
     try {
-        const response = await fetch(`http://localhost:3000/board/post/${postId}/reply`, {
+        const response = await fetch(`${API_URL}/board/post/${postId}/reply`, {
             method: 'POST',
             headers: {
                 'Authorization': sessionId,
@@ -223,7 +223,7 @@ function editPost() {
 async function deletePost() {
     const sessionId = sessionStorage.getItem('sessionId');
     try {
-        const response = await fetch(`http://localhost:3000/board/post/${postId}`, {
+        const response = await fetch(`${API_URL}/board/post/${postId}`, {
             method: 'DELETE',
             credentials: 'include',
             headers: {
@@ -251,7 +251,7 @@ window.editReply = async function (replyId) {
 
     const sessionId = sessionStorage.getItem('sessionId');
     try {
-        const response = await fetch(`http://localhost:3000/board/reply/${replyId}`, {
+        const response = await fetch(`${API_URL}/board/reply/${replyId}`, {
             method: 'PATCH',
             headers: {
                 'Authorization': sessionId,
@@ -284,7 +284,7 @@ window.deleteReply = async function (replyId) {
     // 댓글 삭제 확인
     confirmDeleteReply.addEventListener('click', async () => {
         try {
-            const response = await fetch(`http://localhost:3000/board/reply/${replyId}`, {
+            const response = await fetch(`${API_URL}/board/reply/${replyId}`, {
                 method: 'DELETE',
                 credentials: 'include',
                 headers: {
@@ -315,7 +315,7 @@ window.deleteReply = async function (replyId) {
 async function handleLike() {
     try {
         const sessionId = sessionStorage.getItem('sessionId');
-        const response = await fetch(`http://localhost:3000/board/post/${postId}/like`, {
+        const response = await fetch(`${API_URL}/board/post/${postId}/like`, {
             method: 'POST',
             headers: {
                 'Authorization': sessionId

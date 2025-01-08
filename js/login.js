@@ -4,7 +4,7 @@ const loginForm = document.getElementById('loginform');
 const emailInput = document.getElementById('userid');
 const passwordInput = document.getElementById('userpw');
 const loginBtn = document.querySelector('.buttonValidate');
-
+const API_URL = 'http://localhost:3000';
 let emailValidate = false;
 let passwordValidate = false;
 
@@ -60,7 +60,7 @@ loginForm.addEventListener('submit', async (e) => {
     }
 
     try {
-        const response = await fetch('http://localhost:3000/auth/login', {
+        const response = await fetch(`${API_URL}/auth/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

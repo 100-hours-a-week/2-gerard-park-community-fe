@@ -8,7 +8,7 @@ const passwordInput = document.getElementById('userpw');
 const pwcfInput = document.getElementById('userpwcf');
 const usernameInput = document.getElementById('username');
 const signupBtn = document.querySelector('.buttonValidate');
-
+const API_URL = 'http://localhost:3000';
 let emailValidate = false;
 let passwordValidate = false;
 let pwcfValidate = false;
@@ -203,7 +203,7 @@ signupForm.addEventListener('submit', async (e) => {
     }
 
     try {
-        const response = await fetch('http://localhost:3000/auth/signup', {
+        const response = await fetch(`${API_URL}/auth/signup`, {
             method: 'POST',
             body: formData
         });

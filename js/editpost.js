@@ -1,4 +1,4 @@
-import { fetchUserProfile } from './dropdown.js';
+import { fetchUserProfile, API_URL } from './dropdown.js';
 const urlParams = new URLSearchParams(window.location.search);
 const postId = urlParams.get('id');
 document.addEventListener('DOMContentLoaded', () => {
@@ -30,7 +30,7 @@ async function fetchPostInfo() {
             window.location.href = '/board';
         }
 
-        const response = await fetch(`http://localhost:3000/board/post/${postId}`, {
+        const response = await fetch(`${API_URL}/board/post/${postId}`, {
             method: 'GET',
             headers: {
                 'Authorization': sessionId
@@ -83,7 +83,7 @@ async function updatePostInfo() {
             formData.append('image', image.files[0]);
         }
 
-        const response = await fetch(`http://localhost:3000/board/post/${postId}`, {
+        const response = await fetch(`${API_URL}/board/post/${postId}`, {
             method: 'PATCH',
             headers: {
                 'Authorization': sessionId

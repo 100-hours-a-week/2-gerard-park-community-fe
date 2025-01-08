@@ -1,5 +1,5 @@
 import * as checkValidate from './check.js'
-import { fetchUserProfile } from './dropdown.js';
+import { fetchUserProfile, API_URL } from './dropdown.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     const editPasswordForm = document.getElementById('editPasswordForm');
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
-            const response = await fetch('http://localhost:3000/users/update-password', {
+            const response = await fetch(`${API_URL}/users/update-password`, {
                 method: 'PATCH',
                 headers: {
                     'Authorization': sessionId,

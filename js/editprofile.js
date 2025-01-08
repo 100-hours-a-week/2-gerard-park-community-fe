@@ -1,4 +1,4 @@
-import { fetchUserProfile } from './dropdown.js';
+import { fetchUserProfile, API_URL } from './dropdown.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     const editProfileForm = document.getElementById('editProfileForm');
@@ -65,7 +65,7 @@ async function fetchUserInfo() {
     }
 
     try {
-        const response = await fetch('http://localhost:3000/users/user-info', {
+        const response = await fetch(`${API_URL}/users/user-info`, {
             method: 'GET',
             headers: { 'Authorization': sessionId },
             credentials: 'include',
@@ -106,7 +106,7 @@ async function updateUserInfo() {
     }
 
     try {
-        const response = await fetch('http://localhost:3000/users/update', {
+        const response = await fetch(`${API_URL}/users/update`, {
             method: 'PATCH',
             headers: {
                 'Authorization': sessionId,
@@ -134,7 +134,7 @@ async function updateUserInfo() {
 async function deleteUser() {
     const sessionId = sessionStorage.getItem('sessionId');
     try {
-        const response = await fetch('http://localhost:3000/users/delete', {
+        const response = await fetch(`${API_URL}/users/delete`, {
             method: 'DELETE',
             headers: { 'Authorization': sessionId },
             credentials: 'include',

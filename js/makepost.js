@@ -1,4 +1,4 @@
-import { fetchUserProfile } from './dropdown.js';
+import { fetchUserProfile, API_URL } from './dropdown.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     fetchUserProfile();
@@ -42,7 +42,7 @@ makepostForm.addEventListener('submit', async (e) => {
     }
 
     try {
-        const response = await fetch('http://localhost:3000/board/makepost', {
+        const response = await fetch(`${API_URL}/board/makepost`, {
             method: 'POST',
             headers: {
                 'Authorization': sessionId,

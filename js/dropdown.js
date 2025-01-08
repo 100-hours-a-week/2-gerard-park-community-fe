@@ -3,6 +3,9 @@ const dropMenu = document.querySelector('.dropdown-content');
 const logoutMenu = document.querySelector('#logout');
 const dropProfileImage = document.querySelector('#dropProfileImage');
 const home = document.querySelector('div h1');
+
+export const API_URL = 'http://localhost:3000';
+
 dropBtn.addEventListener('click', () => {
     dropMenu.classList.toggle('show');
 });
@@ -23,7 +26,7 @@ export async function fetchUserProfile() {
     } */
 
     try {
-        const response = await fetch('http://localhost:3000/users/user-info', {
+        const response = await fetch(`${API_URL}/users/user-info`, {
             method: 'GET',
             headers: { 'Authorization': sessionId },
             credentials: 'include',
@@ -44,7 +47,7 @@ export async function fetchUserProfile() {
 
 async function logout() {
     try {
-        const response = await fetch('http://localhost:3000/users/logout', {
+        const response = await fetch(`${API_URL}/users/logout`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

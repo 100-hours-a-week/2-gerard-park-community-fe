@@ -1,4 +1,4 @@
-import { fetchUserProfile } from './dropdown.js';
+import { fetchUserProfile, API_URL } from './dropdown.js';
 
 async function loadPosts() {
     try {
@@ -11,14 +11,13 @@ async function loadPosts() {
             return;
         } */
 
-        const response = await fetch('http://localhost:3000/board/posts', {
+        const response = await fetch(`${API_URL}/board/posts`, {
             method: 'GET',
             headers: {
                 //'Authorization': sessionId
             },
             credentials: 'include'
         });
-
         const posts = await response.json();
         if (!response.ok) {
             throw new Error(`Failed to fetch post. ${posts.message}`);
