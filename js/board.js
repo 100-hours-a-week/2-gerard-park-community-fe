@@ -48,7 +48,7 @@ async function loadPosts() {
                                 </div>
                             </div>
                             <div class="row_c" style="width: 30%;">
-                                ${new Date(post.createdAt).toLocaleDateString()}
+                                ${new Date(post.created_at).toLocaleDateString()}
                             </div>
                         </div>
                     </div>

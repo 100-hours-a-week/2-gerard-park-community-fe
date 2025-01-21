@@ -62,7 +62,7 @@ async function loadPostFirst() {
             document.querySelector('#titleProfileImage').src = post.profileImage
         }
         document.querySelector('#postUserName').textContent = post.username;
-        document.querySelector('#postDate').textContent = new Date(post.createdAt).toLocaleString();
+        document.querySelector('#postDate').textContent = new Date(post.created_at).toLocaleString();
         document.querySelector('.pre').textContent = post.content;
         if (post.image) {
             const postImg = document.querySelector('#postImg');
@@ -76,7 +76,7 @@ async function loadPostFirst() {
         document.querySelector('#viewC').textContent = post.views;
         document.querySelector('#replyC').textContent = post.replies;
         // 작성자일 경우에만 수정/삭제 버튼 표시
-        if (post.userId !== JSON.parse(sessionId).sessionId) {
+        if (post.user_id !== JSON.parse(sessionId).sessionId) {
             document.getElementById('editPostBtn').style.display = 'none';
             document.getElementById('deletePostBtn').style.display = 'none';
         } else {
@@ -111,7 +111,7 @@ async function loadPost() {
         document.querySelector('#viewC').textContent = post.views;
         document.querySelector('#replyC').textContent = post.replies;
         // 작성자일 경우에만 수정/삭제 버튼 표시
-        if (post.userId !== JSON.parse(sessionId).sessionId) {
+        if (post.user_id !== JSON.parse(sessionId).sessionId) {
             document.getElementById('editPostBtn').style.display = 'none';
             document.getElementById('deletePostBtn').style.display = 'none';
         } else {
@@ -156,14 +156,14 @@ async function loadReplies() {
                                 </div>
                             </div>
                             <div class="row_c" style="justify-content: flex-start;flex: 2;">
-                                ${new Date(reply.createdAt).toLocaleString()}
+                                ${new Date(reply.created_at).toLocaleString()}
                             </div>
                         </div>
                         <div style="margin: 10px;">
                             ${reply.content}
                         </div>
                     </div>
-                    ${reply.userId === JSON.parse(sessionId).sessionId ? `
+                    ${reply.user_id === JSON.parse(sessionId).sessionId ? `
                         <div class="row_c" style="flex: 1;">
                             <button onclick="editReply(${reply.id})" class="edbuttons">수정</button>
                             <button onclick="deleteReply(${reply.id})" class="edbuttons">삭제</button>

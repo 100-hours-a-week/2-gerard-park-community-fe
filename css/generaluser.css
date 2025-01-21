@@ -29,6 +29,7 @@
     width: 35px;
     height: 35px;
     overflow: hidden;
+    object-fit: cover;
 }
 
 .dropdown {
