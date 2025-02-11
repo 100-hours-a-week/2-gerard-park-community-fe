@@ -54,15 +54,15 @@ async function loadPosts() {
                     </div>
                     <hr style="border:1px solid#dbdbdb; height: 1px !important; display: block !important; width: 100% !important;"/>
                     <div class="row_c" style="justify-content: flex-start;">
-                        <img src="{${API_URL+post.profileImage || '../lib/defaultProfilePic.jpg'}" class="imgProfile" alt="profile">
+                        <img src="${(API_URL+post.profileImage) || '../lib/defaultProfilePic.jpg'}" class="imgProfile" alt="profile">
                         <div style="margin-left: 10px;font-weight: 500;font-size: large;">
                             ${post.username}
                         </div>
                     </div>
                 </article>
             `;
-            //boardList.innerHTML += postElement;
-            boardList.innerHTML = postElement + boardList.innerHTML;
+            boardList.innerHTML += postElement;
+            //boardList.innerHTML = postElement + boardList.innerHTML;
         });
 
         // 각 게시글에 이벤트 리스너 추가
