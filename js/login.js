@@ -4,7 +4,7 @@ const loginForm = document.getElementById('loginform');
 const emailInput = document.getElementById('userid');
 const passwordInput = document.getElementById('userpw');
 const loginBtn = document.querySelector('.buttonValidate');
-const API_URL = 'http://localhost:3000';
+const API_URL = 'http://3.39.195.183:3000';
 let emailValidate = false;
 let passwordValidate = false;
 

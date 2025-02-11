@@ -59,14 +59,14 @@ async function loadPostFirst() {
         document.querySelector('#postTitle').textContent = post.title;
         document.getElementById('like').textContent = post.emoji;
         if (post.profileImage) {
-            document.querySelector('#titleProfileImage').src = post.profileImage
+            document.querySelector('#titleProfileImage').src = API_URL+post.profileImage
         }
         document.querySelector('#postUserName').textContent = post.username;
         document.querySelector('#postDate').textContent = new Date(post.created_at).toLocaleString();
         document.querySelector('.pre').textContent = post.content;
         if (post.image) {
             const postImg = document.querySelector('#postImg');
-            postImg.src = post.image;
+            postImg.src = `${API_URL+post.image}`;
             postImg.style.display = 'block';
         } else {
             document.querySelector('#postImg').style.display = 'none';
@@ -150,7 +150,7 @@ async function loadReplies() {
                     <div class="rel" style="flex: 3;">
                         <div class="row">
                             <div class="row_c" style="justify-content: flex-start;flex: 1;">
-                                <img src=${reply.profileImage ? reply.profileImage : `"../lib/defaultProfilePic.jpg"`} class="imgProfile">
+                                <img src=${reply.profileImage ? API_URL+reply.profileImage : `"../lib/defaultProfilePic.jpg"`} class="imgProfile">
                                 <div style="margin-left: 10px;font-weight: 500;font-size: large;">
                                     ${reply.username}
                                 </div>

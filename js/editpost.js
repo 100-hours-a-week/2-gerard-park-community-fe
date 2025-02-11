@@ -45,7 +45,7 @@ async function fetchPostInfo() {
             // 이미지가 있는 경우 미리보기 표시
             if (data.image) {
                 const imagePreview = document.createElement('img');
-                imagePreview.src = data.image;
+                imagePreview.src = `${API_URL+data.image}`;
                 imagePreview.style.maxWidth = '200px';
                 document.querySelector('#imgP').appendChild(imagePreview);
             }

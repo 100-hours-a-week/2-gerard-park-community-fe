@@ -76,7 +76,7 @@ async function fetchUserInfo() {
             document.getElementById('useremail').innerHTML = data.email;
             document.getElementById('username').value = data.username;
             if (data.profileImage) {
-                profilePreview.src = data.profileImage;
+                profilePreview.src = `${API_URL+data.profileImage}`;
                 profilePreview.style.display = 'block';
             }
         } else {

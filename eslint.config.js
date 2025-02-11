@@ -3,6 +3,7 @@ import { dirname } from 'path';
 import { FlatCompat } from '@eslint/eslintrc';
 import airbnb from 'eslint-config-airbnb';
 import prettier from 'eslint-plugin-prettier';
+import { env } from 'process';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -18,6 +19,11 @@ export default [
         rules: {
             'prettier/prettier': ['error'],
             'no-console': 'off',
+            'import/prefer-default-export': 'off',
+		    'import/extensions': ['off'],
+        },
+        env: {
+          node: true,  
         },
         ignores: [
             'node_modules/',

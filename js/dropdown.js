@@ -4,7 +4,7 @@ const logoutMenu = document.querySelector('#logout');
 const dropProfileImage = document.querySelector('#dropProfileImage');
 const home = document.querySelector('div h1');
 
-export const API_URL = 'http://localhost:3000';
+export const API_URL = 'http://3.39.195.183:3000';
 
 dropBtn.addEventListener('click', () => {
     dropMenu.classList.toggle('show');
@@ -35,7 +35,7 @@ export async function fetchUserProfile() {
         if (response.ok) {
             const data = await response.json();
             if (data.profileImage) {
-                dropProfileImage.src = data.profileImage;
+                dropProfileImage.src = API_URL+data.profileImage;
             }
         } else {
             console.error('사용자 프로필 이미지를 불러오는데 실패했습니다.');
